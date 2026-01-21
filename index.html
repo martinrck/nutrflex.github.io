@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrflex | Suplementación Profesional</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+
+    <div id="toast-container"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            
+            <a href="#inicio" class="logo" onclick="navigate('home', 'nav-home')">
+                <i class="ph-fill ph-lightning"></i>
+                NUTR<span>FLEX</span>
+            </a>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#inicio" id="nav-home" class="active" onclick="navigate('home', 'nav-home')">Inicio</a></li>
+                <li><a href="#" id="nav-store" class="store-link" onclick="navigate('store', 'nav-store')">Tienda</a></li>
+                <li><a href="#nosotros" id="nav-about" onclick="navigate('home', 'nav-about')">Nosotros</a></li>
+                <li><a href="#comprar" id="nav-buy" onclick="navigate('home', 'nav-buy')">Cómo Comprar</a></li>
+                
+                <button class="close-menu-btn" onclick="toggleMenu()"><i class="ph ph-x"></i></button>
+            </ul>
+
+            <div class="nav-actions-mobile">
+                <button id="theme-toggle" aria-label="Cambiar tema">
+                    <i class="ph ph-moon"></i>
+                </button>
+                
+                <div class="nav-cart-btn" onclick="toggleCart()">
+                    <i class="ph ph-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+
+                <button class="hamburger-btn" onclick="toggleMenu()">
+                    <i class="ph ph-list"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div id="cart-overlay" class="cart-overlay" onclick="toggleCart()"></div>
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Tu Pedido</h3>
+            <button onclick="toggleCart()" class="close-cart"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            <p class="empty-cart-msg">Tu carrito está vacío.</p>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total Estimado:</span>
+                <span id="cart-total-price">$0</span>
+            </div>
+            <button id="checkout-btn" class="btn-primary btn-block">
+                <i class="ph ph-whatsapp-logo"></i> Solicitar Presupuesto
+            </button>
+        </div>
+    </div>
+
+    <div id="view-home">
+        
+        <header id="inicio" class="hero">
+            <div class="hero-bg"></div>
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h1>Potencia tu <span class="text-gradient">rendimiento</span> <br> al máximo nivel.</h1>
+                <p>Suplementación deportiva de grado farmacéutico. Arma tu stack completo y recíbelo en la comodidad de tu casa.</p>
+                <div class="hero-btns">
+                    <button onclick="navigate('store', 'nav-store')" class="btn-primary">Ver Catálogo</button>
+                    <a href="#comprar" onclick="navigate('home', 'nav-buy')" class="btn-secondary">Cómo Comprar</a>
+                </div>
+            </div>
+        </header>
+
+        <section id="nosotros" class="section bg-alt">
+            <div class="container">
+                <div class="about-grid">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?auto=format&fit=crop&q=80&w=800" alt="Equipo Nutrflex Profesional">
+                        <div class="brand-overlay">
+                            <i class="ph-fill ph-lightning"></i> NUTRFLEX
+                        </div>
+                        <div class="experience-badge">
+                            <span class="years">+2</span>
+                            <span class="text">Años de<br>Trayectoria</span>
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <h3 class="subtitle">NUESTRA ESENCIA</h3>
+                        <h2>Más que suplementos, somos tu equipo.</h2>
+                        <p>Nacimos con una misión clara: democratizar el acceso a la nutrición deportiva de élite. En <strong>Nutrflex</strong>, entendemos que cada gramo cuenta y que la constancia es la clave del éxito.</p>
+                        <ul class="about-features">
+                            <li><i class="ph-fill ph-check-circle"></i> Calidad Garantizada</li>
+                            <li><i class="ph-fill ph-check-circle"></i> Asesoramiento Personalizado</li>
+                            <li><i class="ph-fill ph-check-circle"></i> Envíos a todo el país</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonios" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>La Voz de los Atletas</h2>
+                    <p>Quienes confían en nosotros para superar sus marcas.</p>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                        <p class="quote">"La proteína Isolate cambió mi recuperación. El sabor es buenardo y la entrega fue súper rápida."</p>
+                        <div class="author">
+                            <div class="avatar">JM</div>
+                            <div class="info"><h4>Juan Martín R.</h4><span>Crossfit Athlete</span></div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i></div>
+                        <p class="quote">"Me asesoraron por WhatsApp para armar mi stack de volumen y los resultados en 2 meses fueron brutales."</p>
+                        <div class="author">
+                            <div class="avatar">SO</div>
+                            <div class="info"><h4>Sofía O.</h4><span>Runner Amateur</span></div>
+                        </div>
+                    </div>
+                    <div class="testimonial-card">
+                        <div class="stars"><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star"></i><i class="ph-fill ph-star-half"></i></div>
+                        <p class="quote">"El Pre-Workout es pura dinamita. Me da la energía justa sin ponerme nervioso. Excelente relación precio-calidad."</p>
+                        <div class="author">
+                            <div class="avatar">LG</div>
+                            <div class="info"><h4>Lucas G.</h4><span>Bodybuilder</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="comprar" class="section bg-alt">
+            <div class="container">
+                <div class="steps-wrapper">
+                    <h3 class="steps-title">Compra en 3 Simples Pasos</h3>
+                    <div class="steps-grid">
+                        <div class="step-card">
+                            <div class="step-icon"><i class="ph ph-plus-circle"></i></div>
+                            <h4>1. Selección</h4>
+                            <p>Explora nuestro catálogo y agrega los suplementos a tu carrito.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-icon"><i class="ph ph-whatsapp-logo"></i></div>
+                            <h4>2. Cotización</h4>
+                            <p>Tu pedido se envía automáticamente a nuestro WhatsApp para verificar stock.</p>
+                        </div>
+                        <div class="step-card">
+                            <div class="step-icon"><i class="ph ph-credit-card"></i></div>
+                            <h4>3. Envío Express</h4>
+                            <p>Abonas con tu medio preferido y despachamos tu pedido en 24hs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="view-store" class="hidden section-store-padding">
+        <section id="productos" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="store-badge">TIENDA ONLINE</span>
+                    <h2>Catálogo Completo</h2>
+                    <p>Filtra, elige y arma tu mejor versión.</p>
+                    <button class="btn-secondary" onclick="navigate('home', 'nav-home')" style="margin-top:20px;">
+                        <i class="ph ph-arrow-left"></i> Volver al Inicio
+                    </button>
+                </div>
+                <div class="product-grid" id="products-container">
+                    </div>
+            </div>
+        </section>
+    </div>
+
+    <footer id="contacto">
+        <div class="container footer-content">
+            <div class="footer-col">
+                <div class="logo logo-footer">
+                    <i class="ph-fill ph-lightning"></i>
+                    NUTR<span>FLEX</span>
+                </div>
+                <p style="margin-top:10px;">Nutrición inteligente diseñada para romper límites.</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-contact-title">Contacto Directo</h4>
+                <p class="footer-contact-item"><i class="ph ph-whatsapp-logo"></i> +54 9 11 6025-6374</p>
+                <p><i class="ph ph-envelope"></i> info@nutrflex.com</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Nutrflex. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
