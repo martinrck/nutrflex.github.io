@@ -29,7 +29,7 @@
     --shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
 
-/* --- UTILIDADES --- */
+/* --- UTILIDADES DE VISTA --- */
 .hidden { display: none !important; }
 .section-store-padding { padding-top: 80px; min-height: 80vh; }
 .store-badge { background: var(--primary); color: white; padding: 5px 15px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 15px; display: inline-block; }
