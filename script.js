@@ -1,7 +1,7 @@
 // --- CONFIGURACIÓN ---
 const WHATSAPP_NUMBER = "5491100000000"; 
 
-// --- BASE DE DATOS DE PRODUCTOS ---
+// --- BASE DE DATOS ---
 const productsDB = [
     { id: 1, name: "Whey Isolate Pro", price: 45000, category: "Proteínas", img: "https://images.unsplash.com/photo-1579722821273-0f6c7d44362f?auto=format&fit=crop&q=80&w=600" },
     { id: 2, name: "Creatine Monohydrate", price: 32000, category: "Fuerza", img: "https://images.unsplash.com/photo-1593095948071-474c5cc2989d?auto=format&fit=crop&q=80&w=600" },
@@ -16,44 +16,52 @@ const productsDB = [
 
 let cart = [];
 
+// --- INICIALIZACIÓN SEGURA ---
 document.addEventListener("DOMContentLoaded", () => {
+    // 1. Quitar Loader
     setTimeout(() => {
         const loader = document.getElementById('loader-wrapper');
-        loader.style.opacity = '0';
-        loader.style.visibility = 'hidden';
+        if(loader) {
+            loader.style.opacity = '0';
+            loader.style.visibility = 'hidden';
+        }
     }, 800);
 
+    // 2. Cargar Productos y Tema
     renderProducts();
     initTheme();
+
+    // 3. ACTIVAR BOTÓN DE COMPRA (Corrección del error)
+    const checkoutBtn = document.getElementById('checkout-btn');
+    if (checkoutBtn) {
+        checkoutBtn.addEventListener('click', processCheckout);
+    }
 });
 
-// NUEVA FUNCIÓN: MENÚ HAMBURGUESA
-function toggleMenu() {
-    const navLinks = document.getElementById('nav-links');
-    navLinks.classList.toggle('active');
-}
-
-// FUNCIÓN NAVEGACIÓN (Mejorada para cerrar menú en móvil al hacer click)
+// --- LÓGICA DE NAVEGACIÓN ---
 function navigate(viewName, activeNavId) {
     const homeView = document.getElementById('view-home');
     const storeView = document.getElementById('view-store');
-    
-    // Cerrar menú móvil si está abierto
     const navLinks = document.getElementById('nav-links');
-    if (navLinks.classList.contains('active')) {
+
+    // Cerrar menú móvil si está abierto
+    if (navLinks && navLinks.classList.contains('active')) {
         navLinks.classList.remove('active');
     }
 
+    // Scroll arriba
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Cambiar Vista
     if (viewName === 'store') {
         homeView.classList.add('hidden');
         storeView.classList.remove('hidden');
-        window.scrollTo(0, 0); 
     } else {
         storeView.classList.add('hidden');
         homeView.classList.remove('hidden');
     }
 
-    // Gestionar clase active
+    // Actualizar Botones Navbar
     const allLinks = document.querySelectorAll('.nav-links a');
     allLinks.forEach(link => link.classList.remove('active'));
 
@@ -63,8 +71,16 @@ function navigate(viewName, activeNavId) {
     }
 }
 
+function toggleMenu() {
+    const navLinks = document.getElementById('nav-links');
+    navLinks.classList.toggle('active');
+}
+
+// --- LÓGICA DE PRODUCTOS ---
 function renderProducts() {
     const container = document.getElementById('products-container');
+    if (!container) return; // Protección
+
     container.innerHTML = productsDB.map(product => `
         <div class="card">
             <div class="card-img">
@@ -82,6 +98,7 @@ function renderProducts() {
     `).join('');
 }
 
+// --- LÓGICA DEL CARRITO ---
 function addToCart(id) {
     const product = productsDB.find(p => p.id === id);
     const existingItem = cart.find(item => item.id === id);
@@ -112,10 +129,17 @@ function changeQty(id, change) {
 }
 
 function updateCartUI() {
+    // Calcular Total Items
     const totalCount = cart.reduce((acc, item) => acc + item.qty, 0);
-    document.getElementById('cart-count').innerText = totalCount;
-    document.getElementById('mobile-cart-count').innerText = totalCount; // Ahora este elemento existe
+    
+    // Actualizar Contadores (Con protección por si no existen en alguna vista)
+    const desktopCount = document.getElementById('cart-count');
+    const mobileCount = document.getElementById('mobile-cart-count');
+    
+    if (desktopCount) desktopCount.innerText = totalCount;
+    if (mobileCount) mobileCount.innerText = totalCount;
 
+    // Actualizar Lista y Precio
     const container = document.getElementById('cart-items-container');
     const totalPriceElement = document.getElementById('cart-total-price');
     
@@ -148,14 +172,12 @@ function updateCartUI() {
         }).join('');
     }
 
-    totalPriceElement.innerText = `$${formatPrice(total)}`;
+    if(totalPriceElement) totalPriceElement.innerText = `$${formatPrice(total)}`;
 }
 
 function toggleCart() {
-    const sidebar = document.getElementById('cart-sidebar');
-    const overlay = document.getElementById('cart-overlay');
-    sidebar.classList.toggle('active');
-    overlay.classList.toggle('active');
+    document.getElementById('cart-sidebar').classList.toggle('active');
+    document.getElementById('cart-overlay').classList.toggle('active');
 }
 
 function openCart() {
@@ -165,7 +187,8 @@ function openCart() {
     }
 }
 
-document.getElementById('checkout-btn').addEventListener('click', () => {
+// --- CHECKOUT (WHATSAPP) ---
+function processCheckout() {
     if (cart.length === 0) {
         showToast("Tu carrito está vacío 😔");
         return;
@@ -185,8 +208,9 @@ document.getElementById('checkout-btn').addEventListener('click', () => {
 
     const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
     window.open(url, '_blank');
-});
+}
 
+// --- UTILIDADES ---
 function formatPrice(price) {
     return new Intl.NumberFormat('es-AR').format(price);
 }
@@ -207,6 +231,8 @@ function showToast(message) {
 
 function initTheme() {
     const toggleBtn = document.getElementById('theme-toggle');
+    if (!toggleBtn) return; // Protección
+
     const icon = toggleBtn.querySelector('i');
     const body = document.body;
     const currentTheme = localStorage.getItem('theme');
